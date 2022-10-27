@@ -9,9 +9,9 @@
       rel="stylesheet"
     />
 
-    <title>Cadastrar Marcas</title>
+    <title>Início</title>
   </head>
-  <body onload="atualizarTabelaMarca()">
+  <body onload="atualizarTabelaProdutosAleatorios()">
     <div class="container mt-2">
       <nav class="nav nav-tabs nav-fill mb-3 mt-3">
         <a class="nav-link active" href="index.html">Início</a>
@@ -21,41 +21,15 @@
         <a class="nav-link" href="carrinho.html">Carrinho</a>
       </nav>
 
-      <div class="card mb-3">
-        <div class="card-header">Cadastrar</div>
-        <div class="card-body">
-          <div class="form-group row">
-            <label for="nomeMarca" class="form-label">
-              Nome
-              <input
-                type="text"
-                name="nomeMarca"
-                id="nomeMarca"
-                class="form-control"
-                required
-                minlength="3"
-              />
-            </label>
-
-            <div class="form-group">
-              <button
-                onclick="cadastrarMarca()"
-                class="btn btn-primary"
-                id="btn-cadastrar-marca"
-              >
-                Cadastrar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="card">
         <div class="card-header">Listagem</div>
         <div class="card-body">
-          <table class="table" id="tabelaMarcas">
+          <table class="table" id="tabela-marcas">
             <thead>
               <th>Nome</th>
+              <th>Marca</th>
+              <th>Estoque</th>
+              <th>Preço</th>
               <th></th>
             </thead>
             <tbody></tbody>

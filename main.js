@@ -54,7 +54,6 @@ function atualizarTabelaSegmentos() {
 }
 
 function atualizarTabelaProdutos() {
-  console.log("rodou");
   var dados = "";
   for (p of produtos) {
     dados += `<tr>
@@ -69,6 +68,33 @@ function atualizarTabelaProdutos() {
 
     document.getElementsByTagName("tbody")[0].innerHTML = dados;
   }
+}
+
+function atualizarTabelaProdutosAleatorios() {
+  var dados = "";
+
+  let produtosAleatorios = [];
+  let indicesAleatorios = [];
+  while (indicesAleatorios.length < 12) {
+    indexAleatorio = Math.floor(Math.random() * produtos.length);
+
+    if (indicesAleatorios.indexOf(indexAleatorio) === -1) {
+      indicesAleatorios.push(indexAleatorio);
+    }
+  }
+  console.log(indicesAleatorios);
+
+  for (i of indicesAleatorios) {
+    dados += `<tr>
+   <td>${produtos[i].nome}</td>
+   <td>${produtos[i].segmento}</td>
+   <td>${produtos[i].estoque}</td>
+   <td>R$ ${produtos[i].preco}</td>
+   <td><button onclick="excluirMarca(
+   )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
+   </tr>`;
+  }
+  document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
 
 function carregarArraysComLocalStorage() {
