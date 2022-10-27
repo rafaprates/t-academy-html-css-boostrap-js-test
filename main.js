@@ -170,7 +170,7 @@ function totalCarrinho() {
   for (c of carrinho) {
     total += c.precoProduto * c.quantidade;
   }
-  return total;
+  return total.toFixed(2);
 }
 
 function existeProdutoEmCarrinho(nomeProduto) {
