@@ -29,19 +29,13 @@ function atualizarTabelaProdutos(tabelaProdutos = produtos) {
 }
 
 function gerarProdutosFiltrados() {
-  console.log("produtosFiltrados()");
-
   let segmento = document.getElementById("selecionar-segmento").value;
-  console.log(segmento);
-
   let = produtosFiltrados = [];
-
   for (p of produtos) {
     if (p.segmento == segmento) {
       produtosFiltrados.push(p);
     }
   }
-
   atualizarTabelaProdutos(produtosFiltrados);
 }
 
@@ -50,32 +44,14 @@ function gerarProdutosAleatorios() {
   let indicesAleatorios = [];
   while (indicesAleatorios.length < 12) {
     indexAleatorio = Math.floor(Math.random() * produtos.length);
-
     if (indicesAleatorios.indexOf(indexAleatorio) === -1) {
       indicesAleatorios.push(indexAleatorio);
     }
   }
-  console.log(indicesAleatorios);
-
   for (i of indicesAleatorios) {
     produtosAleatorios.push(produtos[i]);
   }
-
   atualizarTabelaProdutos(produtosAleatorios);
-}
-
-function produtoEmEstoque(nomeProduto, retirarQuantidade) {
-  console.log("produtoEmEstoque()");
-  for (p of produtos) {
-    if (p.nome == nomeProduto) {
-      var quantidadeEmEstoque = p.estoque;
-    }
-  }
-
-  if (quantidadeEmEstoque - retirarQuantidade >= 0) {
-    return true;
-  }
-  return false;
 }
 
 function pesquisarProduto() {
@@ -88,24 +64,15 @@ function pesquisarProduto() {
       console.log(p.nome);
     }
   }
-
   atualizarTabelaProdutos(produtosComTermo);
 }
 
 function addCarrinho(idProduto) {
-  console.log("addCarrinho()");
-  // encontrar produto no array de Produtos
   let p = produtos[idProduto];
-  console.log(p);
-
-  // descontar a quantidade do estoque
-  // atualizar localStorage
-
   if (p.estoque - 1 >= 0) {
     p.estoque = p.estoque - 1;
     localStorage.setItem("produtos", JSON.stringify(produtos));
 
-    // Construir objeto que vai para carrinho
     if (existeProdutoEmCarrinho(p.nome)) {
       c = carrinho.find((element, index) => {
         return element.nomeProduto === p.nome;
@@ -121,26 +88,20 @@ function addCarrinho(idProduto) {
       };
       carrinho.push(c);
     }
-    // adicionar produto ao carrinho com o estoque descontado
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
   } else {
-    alert("fora de estoque");
+    alert("Fora de estoque");
   }
 }
 
 function subtrairCarrinho(idProduto) {
-  console.log(carrinho);
   let p = produtos[idProduto];
 
   c = carrinho.find((element, index) => {
     return element.nomeProduto === p.nome;
   });
 
-  console.log("quantidade");
-  console.log(c.quantidade);
-
-  if (c.quantidade === 0) {
-    console.log("É 0");
+  if (c.quantidade === 1) {
     excluirProdutoCarrinho(produtos.indexOf(produtos[idProduto]));
   } else {
     p.estoque = p.estoque + 1;
@@ -151,13 +112,11 @@ function subtrairCarrinho(idProduto) {
       });
       c.quantidade = c.quantidade - 1;
     }
-    // carrinho.push(c);
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
   }
 }
 
 function atualizarTabelaCarrinho() {
-  console.log("foi chamada");
   var dados = "";
   for (c of carrinho) {
     let p = produtos.find((element, index) => {
@@ -192,8 +151,6 @@ function excluirProdutoCarrinho(indice) {
   item = carrinho[indice];
   quantidadeItem = item.quantidade;
 
-  // Atualizar estoque do produto
-  console.log(item.quantidade);
   var p = produtos.find((element, index) => {
     return element.nome === item.nomeProduto;
   });
@@ -202,21 +159,10 @@ function excluirProdutoCarrinho(indice) {
   produtos[indiceProduto].estoque += quantidadeItem;
   localStorage.setItem("produtos", JSON.stringify(produtos));
 
-  // Remover do carrinho
   carrinho.splice(indice, 1);
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
   atualizarTabelaCarrinho();
-}
-
-function atualizarProdutoCarrinho(idProduto) {
-  let quantidadeAtualizada = document.getElementById(
-    `qtd-carrinho-produto-${idProduto}`
-  ).value;
-
-  console.log(quantidadeAtualizada);
-
-  addCarrinho(idProduto, quantidadeAtualizada);
 }
 
 function totalCarrinho() {
@@ -263,27 +209,27 @@ function inicializarLocalStorage() {
 
   if (localStorage.getItem("produtos") == null) {
     var produtos = [
-      { nome: "iPhone 4", segmento: "telefonia", preco: 1000, estoque: 100 },
-      { nome: "iPhone 4s", segmento: "telefonia", preco: 1050, estoque: 100 },
-      { nome: "iPhone 5", segmento: "telefonia", preco: 1100, estoque: 100 },
-      { nome: "iPhone 5s", segmento: "telefonia", preco: 1250, estoque: 100 },
-      { nome: "iPhone 6", segmento: "telefonia", preco: 1200, estoque: 100 },
-      { nome: "iPhone 6s", segmento: "telefonia", preco: 1250, estoque: 100 },
-      { nome: "iPhone 7", segmento: "telefonia", preco: 1400, estoque: 100 },
-      { nome: "iPhone 7s", segmento: "telefonia", preco: 1500, estoque: 100 },
-      { nome: "iPhone 12", segmento: "telefonia", preco: 3000, estoque: 100 },
+      { nome: "iPhone 4", segmento: "telefonia", preco: 1000, estoque: 10 },
+      { nome: "iPhone 4s", segmento: "telefonia", preco: 1050, estoque: 10 },
+      { nome: "iPhone 5", segmento: "telefonia", preco: 1100, estoque: 10 },
+      { nome: "iPhone 5s", segmento: "telefonia", preco: 1250, estoque: 10 },
+      { nome: "iPhone 6", segmento: "telefonia", preco: 1200, estoque: 10 },
+      { nome: "iPhone 6s", segmento: "telefonia", preco: 1250, estoque: 10 },
+      { nome: "iPhone 7", segmento: "telefonia", preco: 1400, estoque: 10 },
+      { nome: "iPhone 7s", segmento: "telefonia", preco: 1500, estoque: 10 },
+      { nome: "iPhone 12", segmento: "telefonia", preco: 3000, estoque: 10 },
       { nome: "iPhone 2089", segmento: "telefonia", preco: 3800, estoque: 2 },
 
-      { nome: "camiseta", segmento: "vestuario", preco: 249, estoque: 100 },
-      { nome: "bandeira", segmento: "vestuario", preco: 100, estoque: 100 },
-      { nome: "short", segmento: "vestuario", preco: 59, estoque: 100 },
-      { nome: "tenis", segmento: "vestuario", preco: 300, estoque: 100 },
-      { nome: "chinelo", segmento: "vestuario", preco: 39, estoque: 100 },
-      { nome: "colar", segmento: "vestuario", preco: 99, estoque: 100 },
-      { nome: "calça", segmento: "vestuario", preco: 199, estoque: 100 },
-      { nome: "boné", segmento: "vestuario", preco: 79, estoque: 100 },
-      { nome: "cinto", segmento: "vestuario", preco: 89, estoque: 100 },
-      { nome: "sunga", segmento: "vestuario", preco: 69, estoque: 100 },
+      { nome: "camiseta", segmento: "vestuario", preco: 249, estoque: 10 },
+      { nome: "bandeira", segmento: "vestuario", preco: 100, estoque: 10 },
+      { nome: "short", segmento: "vestuario", preco: 59, estoque: 10 },
+      { nome: "tenis", segmento: "vestuario", preco: 300, estoque: 10 },
+      { nome: "chinelo", segmento: "vestuario", preco: 39, estoque: 10 },
+      { nome: "colar", segmento: "vestuario", preco: 99, estoque: 10 },
+      { nome: "calça", segmento: "vestuario", preco: 199, estoque: 10 },
+      { nome: "boné", segmento: "vestuario", preco: 79, estoque: 10 },
+      { nome: "cinto", segmento: "vestuario", preco: 89, estoque: 10 },
+      { nome: "sunga", segmento: "vestuario", preco: 69, estoque: 10 },
 
       { nome: "sardinha", segmento: "alimentos", preco: 8.99, estoque: 5 },
       { nome: "arroz", segmento: "alimentos", preco: 18.99, estoque: 5 },
