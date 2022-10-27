@@ -123,16 +123,25 @@ function atualizarTabelaCarrinho() {
                 <td>${c.nomeProduto}</td>
                 <td>${c.segmentoProduto}</td>
                 <td>R$ ${c.precoProduto}</td>
-                <td>${c.quantidade}</td>
+                <td>                
+                    <input
+                        class="form-control"
+                        style="width: 50px; height: 30px"
+                        type="number"
+                        id="qtd-carrinho"
+                        value=${c.quantidade}
+                        onchange="console.log('mudou')"
+                    />
+                </td>
+
                 <td><button onclick="excluirProdutoCarrinho(${carrinho.indexOf(
                   c
                 )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
                 </tr>`;
-
-    document.getElementById(
-      "total-carrinho"
-    ).innerHTML = `Total carrinho: R$ ${totalCarrinho()}`;
   }
+  document.getElementById(
+    "total-carrinho"
+  ).innerHTML = `Total carrinho: R$ ${totalCarrinho()}`;
   document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
 
@@ -156,6 +165,8 @@ function excluirProdutoCarrinho(indice) {
 
   atualizarTabelaCarrinho();
 }
+
+function atualizarEstoque() {}
 
 function totalCarrinho() {
   var total = 0;
