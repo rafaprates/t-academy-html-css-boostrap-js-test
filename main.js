@@ -92,7 +92,7 @@ function pesquisarProduto() {
   atualizarTabelaProdutos(produtosComTermo);
 }
 
-function addCarrinho(idProduto, quantidade = 1) {
+function addCarrinho(idProduto) {
   console.log("addCarrinho()");
   // encontrar produto no array de Produtos
   let p = produtos[idProduto];
@@ -100,53 +100,97 @@ function addCarrinho(idProduto, quantidade = 1) {
 
   // descontar a quantidade do estoque
   // atualizar localStorage
-  if (produtoEmEstoque(p.nome, quantidade)) {
-    p.estoque = p.estoque - 1;
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-    if (existeProdutoEmCarrinho(p.nome)) {
-      c = carrinho.find((element, index) => {
-        return element.nomeProduto === p.nome;
-      });
-      c.quantidade = c.quantidade + 1;
-    } else {
-      c = {
-        nomeProduto: p.nome,
-        segmentoProduto: p.segmento,
-        precoProduto: p.preco,
-        quantidade: 1,
-        precoProduto: p.preco,
-      };
-      carrinho.push(c);
-    }
+  p.estoque = p.estoque - 1;
+  localStorage.setItem("produtos", JSON.stringify(produtos));
+
+  // Construir objeto que vai para carrinho
+  if (existeProdutoEmCarrinho(p.nome)) {
+    c = carrinho.find((element, index) => {
+      return element.nomeProduto === p.nome;
+    });
+    c.quantidade = c.quantidade + 1;
   } else {
-    alert("Produto fora de estoque");
+    c = {
+      nomeProduto: p.nome,
+      segmentoProduto: p.segmento,
+      precoProduto: p.preco,
+      quantidade: 1,
+      precoProduto: p.preco,
+    };
+    carrinho.push(c);
   }
+  // adicionar produto ao carrinho com o estoque descontado
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
-  atualizarTabelaCarrinho();
 }
+
+function subtrairCarrinho(idProduto) {
+  let p = produtos[idProduto];
+  p.estoque = p.estoque + 1;
+  localStorage.setItem("produtos", JSON.stringify(produtos));
+  if (existeProdutoEmCarrinho(p.nome)) {
+    c = carrinho.find((element, index) => {
+      return element.nomeProduto === p.nome;
+    });
+    c.quantidade = c.quantidade - 1;
+  }
+  // carrinho.push(c);
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+}
+
+// function addCarrinho(idProduto) {
+// console.log("addCarrinho()");
+// // encontrar produto no array de Produtos
+// let p = produtos[idProduto];
+// console.log(p);
+
+// // descontar a quantidade do estoque
+// // atualizar localStorage
+// if (produtoEmEstoque(p.nome) {
+// p.estoque = p.estoque - 1;
+// localStorage.setItem("produtos", JSON.stringify(produtos));
+// if (existeProdutoEmCarrinho(p.nome)) {
+// c = carrinho.find((element, index) => {
+// return element.nomeProduto === p.nome;
+// });
+// c.quantidade = c.quantidade + 1;
+// } else {
+// c = {
+// nomeProduto: p.nome,
+// segmentoProduto: p.segmento,
+// precoProduto: p.preco,
+// quantidade: 1,
+// precoProduto: p.preco,
+// };
+// carrinho.push(c);
+// }
+// } else {
+// alert("Produto fora de estoque");
+// }
+// localStorage.setItem("carrinho", JSON.stringify(carrinho));
+// atualizarTabelaCarrinho();
+// }
 
 function atualizarTabelaCarrinho() {
   console.log("foi chamada");
   var dados = "";
   for (c of carrinho) {
+    let p = produtos.find((element, index) => {
+      return element.nome == c.nomeProduto;
+    });
+
+    let indexProduto = produtos.indexOf(p);
+    console.log(indexProduto);
+
     console.log(c);
     dados += `<tr>
                 <td>${c.nomeProduto}</td>
                 <td>${c.segmentoProduto}</td>
                 <td>R$ ${c.precoProduto}</td>
-                <td>                
-                    <input
-                        class="form-control"
-                        style="width: 80px; height: 30px"
-                        type="number"
-                        id="qtd-carrinho-produto-${carrinho.indexOf(c)}"
-                        value=${c.quantidade}
-                        onchange="atualizarProdutoCarrinho(${carrinho.indexOf(
-                          c
-                        )})"
-                    />
+                <td> 
+                <button id='subtrair' class='atualizarProduto' onclick="subtrairCarrinho(${indexProduto}); atualizarTabelaCarrinho()">-</button>
+                ${c.quantidade}
+                <button id='add' class='atualizarProduto' onclick="addCarrinho(${indexProduto}); atualizarTabelaCarrinho()">+</button>
                 </td>
-
                 <td><button onclick="excluirProdutoCarrinho(${carrinho.indexOf(
                   c
                 )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
@@ -157,6 +201,39 @@ function atualizarTabelaCarrinho() {
   ).innerHTML = `Total carrinho: R$ ${totalCarrinho()}`;
   document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
+
+// function atualizarTabelaCarrinho() {
+// console.log("foi chamada");
+// var dados = "";
+// for (c of carrinho) {
+// console.log(c);
+// dados += `<tr>
+// <td>${c.nomeProduto}</td>
+// <td>${c.segmentoProduto}</td>
+// <td>R$ ${c.precoProduto}</td>
+// <td>
+// <input
+// class="form-control"
+// style="width: 80px; height: 30px"
+// type="number"
+// id="qtd-carrinho-produto-${carrinho.indexOf(c)}"
+// value=${c.quantidade}
+// onchange="atualizarProdutoCarrinho(${carrinho.indexOf(
+// c
+// )})"
+// />
+// </td>
+
+// <td><button onclick="excluirProdutoCarrinho(${carrinho.indexOf(
+// c
+// )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
+// </tr>`;
+// }
+// document.getElementById(
+// "total-carrinho"
+// ).innerHTML = `Total carrinho: R$ ${totalCarrinho()}`;
+// document.getElementsByTagName("tbody")[0].innerHTML = dados;
+// }
 
 function excluirProdutoCarrinho(indice) {
   item = carrinho[indice];
