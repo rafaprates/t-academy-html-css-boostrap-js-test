@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>Gerenciar produtos</title>
+  </head>
+
+  <body onload="addOpcoesDeMarcas(); adicionarProdutoATabela()">
+    <div class="container mt-2">
+      <nav class="nav nav-tabs nav-fill mb-3 mt-3">
+        <a class="nav-link" href="index.html">Início</a>
+        <a class="nav-link" href="gerenciar-segmentos.html">Segmentos</a>
+        <a class="nav-link active" href="gerenciar-produtos.html">Produtos</a>
+        <a class="nav-link" href="produtos-segmento.html">Produtos/Segmento</a>
+        <a class="nav-link" href="carrinho.html">Carrinho</a>
+      </nav>
+
+      <div class="card mb-3">
+        <div class="card-header">Cadastrar</div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label for="nomeProduto">
+              Nome
+              <input
+                type="text"
+                name="nomeProduto"
+                id="nomeProduto"
+                class="form-control"
+              />
+            </label>
+          </div>
+
+          <div class="form-group row">
+            <label for="marcaProduto">
+              Marca
+              <select
+                name="marcaProduto"
+                id="marcaProduto"
+                class="form-control"
+              ></select>
+            </label>
+          </div>
+
+          <div class="form-group row mb-2">
+            <label for="precoProduto">
+              Preço
+              <input
+                type="number"
+                name="precoProduto"
+                id="precoProduto"
+                class="form-control"
+              />
+            </label>
+          </div>
+
+          <div class="form-group">
+            <button onclick="cadastrarProduto()" class="btn btn-primary">
+              Cadastrar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Listagem</div>
+        <div class="card-body">
+          <table class="table" id="tabelaMarcas">
+            <thead>
+              <th>Nome</th>
+              <th>Marca</th>
+              <th>Preço</th>
+              <th></th>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
