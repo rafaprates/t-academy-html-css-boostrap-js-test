@@ -115,8 +115,10 @@ function addCarrinho(idProduto) {
 }
 
 function atualizarTabelaCarrinho() {
+  console.log("foi chamada");
   var dados = "";
   for (c of carrinho) {
+    console.log(c);
     dados += `<tr>
                 <td>${c.nomeProduto}</td>
                 <td>${c.segmentoProduto}</td>
@@ -127,12 +129,32 @@ function atualizarTabelaCarrinho() {
                 )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
                 </tr>`;
 
-    document.getElementsByTagName("tbody")[0].innerHTML = dados;
-
     document.getElementById(
       "total-carrinho"
     ).innerHTML = `Total carrinho: R$ ${totalCarrinho()}`;
   }
+  document.getElementsByTagName("tbody")[0].innerHTML = dados;
+}
+
+function excluirProdutoCarrinho(indice) {
+  item = carrinho[indice];
+  quantidadeItem = item.quantidade;
+
+  // Atualizar estoque do produto
+  console.log(item.quantidade);
+  var p = produtos.find((element, index) => {
+    return element.nome === item.nomeProduto;
+  });
+
+  indiceProduto = produtos.indexOf(p);
+  produtos[indiceProduto].estoque += quantidadeItem;
+  localStorage.setItem("produtos", JSON.stringify(produtos));
+
+  // Remover do carrinho
+  carrinho.splice(indice, 1);
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+  atualizarTabelaCarrinho();
 }
 
 function totalCarrinho() {
@@ -167,9 +189,6 @@ function carregarArraysComLocalStorage() {
 }
 
 function inicializarLocalStorage() {
-  // localStorage.setItem("segmentos", JSON.stringify(segmentos));
-  // localStorage.setItem("produtos", JSON.stringify(produtos));
-  // localStorage.setItem("carrinho", JSON.stringify(carrinho));
   var segmentos = [
     { nome: "telefonia" },
     { nome: "vestuario" },
