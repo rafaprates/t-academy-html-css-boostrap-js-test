@@ -6,9 +6,6 @@ function atualizarTabelaSegmentos() {
   for (s of segmentos) {
     dados += `<tr>
                 <td>${s.nome}</td>
-                <td><button onclick="excluirMarca(${segmentos.indexOf(
-                  s
-                )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
                 </tr>`;
   }
 
@@ -31,7 +28,7 @@ function atualizarTabelaProdutos(tabelaProdutos = produtos) {
   document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
 
-function atualizarTabelaProdutosAleatorios() {
+function gerarProdutosAleatorios() {
   var dados = "";
 
   let produtosAleatorios = [];
