@@ -53,6 +53,25 @@ function atualizarTabelaProdutosAleatorios() {
   atualizarTabelaProdutos(produtosAleatorios);
 }
 
+function produtoEmEstoque(nomeProduto) {
+  for (p of produtos) {
+    if (p.nome == nomeProduto) {
+      var quantidadeEmEstoque = p.estoque;
+    }
+  }
+
+  console.log(quantidadeEmEstoque);
+
+  if (quantidadeEmEstoque > 0) {
+    return true;
+  }
+  return false;
+  // if (p.estoque > 0) {
+  // return true;
+  // }
+  // return false;
+}
+
 function pesquisarProduto() {
   let termoProcura = document.getElementById("termo-procura").value;
   produtosComTermo = [];
@@ -113,7 +132,19 @@ function atualizarTabelaCarrinho() {
                 </tr>`;
 
     document.getElementsByTagName("tbody")[0].innerHTML = dados;
+
+    document.getElementById(
+      "total-carrinho"
+    ).innerHTML = `Total carrinho: R$ ${totalCarrinho()}`;
   }
+}
+
+function totalCarrinho() {
+  var total = 0;
+  for (c of carrinho) {
+    total += c.precoProduto * c.quantidade;
+  }
+  return total;
 }
 
 function existeProdutoEmCarrinho(nomeProduto) {
