@@ -66,10 +66,6 @@ function produtoEmEstoque(nomeProduto) {
     return true;
   }
   return false;
-  // if (p.estoque > 0) {
-  // return true;
-  // }
-  // return false;
 }
 
 function pesquisarProduto() {
@@ -195,28 +191,29 @@ function inicializarLocalStorage() {
       { nome: "iPhone 7", segmento: "telefonia", preco: 1400, estoque: 100 },
       { nome: "iPhone 7s", segmento: "telefonia", preco: 1500, estoque: 100 },
       { nome: "iPhone 12", segmento: "telefonia", preco: 3000, estoque: 100 },
-      {
-        nome: "iPhone 12 Pro",
-        segmento: "telefonia",
-        preco: 3800,
-        estoque: 100,
-      },
+      { nome: "iPhone 2089", segmento: "telefonia", preco: 3800, estoque: 100 },
 
       { nome: "camiseta", segmento: "vestuario", preco: 249, estoque: 100 },
       { nome: "bandeira", segmento: "vestuario", preco: 100, estoque: 100 },
       { nome: "short ", segmento: "vestuario", preco: 59, estoque: 100 },
       { nome: "tenis ", segmento: "vestuario", preco: 300, estoque: 100 },
       { nome: "chinelo ", segmento: "vestuario", preco: 39, estoque: 100 },
-      {
-        nome: "camiseta regata ",
-        segmento: "vestuario",
-        preco: 99,
-        estoque: 100,
-      },
+      { nome: "colar", segmento: "vestuario", preco: 99, estoque: 100 },
       { nome: "calça ", segmento: "vestuario", preco: 199, estoque: 100 },
       { nome: "boné ", segmento: "vestuario", preco: 79, estoque: 100 },
       { nome: "cinto ", segmento: "vestuario", preco: 89, estoque: 100 },
       { nome: "sunga ", segmento: "vestuario", preco: 69, estoque: 100 },
+
+      { nome: "sardinha", segmento: "alimentos", preco: 8.99, estoque: 5 },
+      { nome: "arroz", segmento: "alimentos", preco: 18.99, estoque: 5 },
+      { nome: "feijão", segmento: "alimentos", preco: 10.99, estoque: 5 },
+      { nome: "macarrão", segmento: "alimentos", preco: 4.99, estoque: 5 },
+      { nome: "café", segmento: "alimentos", preco: 15.99, estoque: 5 },
+      { nome: "açúcar", segmento: "alimentos", preco: 10.99, estoque: 5 },
+      { nome: "sal", segmento: "alimentos", preco: 10.99, estoque: 5 },
+      { nome: "óleo", segmento: "alimentos", preco: 8.99, estoque: 5 },
+      { nome: "ovo", segmento: "alimentos", preco: 11.99, estoque: 5 },
+      { nome: "carne", segmento: "alimentos", preco: 30.99, estoque: 5 },
     ];
     localStorage.setItem("produtos", JSON.stringify(produtos));
   }
