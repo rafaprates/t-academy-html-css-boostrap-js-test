@@ -27,9 +27,8 @@ function atualizarTabelaProdutos(tabelaProdutos = produtos) {
                   p
                 )})" class="btn btn-outline-info btn-sm">Carrinho</button></td>
                 </tr>`;
-
-    document.getElementsByTagName("tbody")[0].innerHTML = dados;
   }
+  document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
 
 function atualizarTabelaProdutosAleatorios() {
@@ -53,16 +52,14 @@ function atualizarTabelaProdutosAleatorios() {
   atualizarTabelaProdutos(produtosAleatorios);
 }
 
-function produtoEmEstoque(nomeProduto) {
+function produtoEmEstoque(nomeProduto, retirarQuantidade) {
   for (p of produtos) {
     if (p.nome == nomeProduto) {
       var quantidadeEmEstoque = p.estoque;
     }
   }
 
-  console.log(quantidadeEmEstoque);
-
-  if (quantidadeEmEstoque > 0) {
+  if (quantidadeEmEstoque - retirarQuantidade >= 0) {
     return true;
   }
   return false;
@@ -89,28 +86,27 @@ function addCarrinho(idProduto) {
 
   // descontar a quantidade do estoque
   // atualizar localStorage
-  p.estoque = p.estoque - 1;
-  localStorage.setItem("produtos", JSON.stringify(produtos));
-
-  // Construir objeto que vai para carrinho
-  if (existeProdutoEmCarrinho(p.nome)) {
-    c = carrinho.find((element, index) => {
-      return element.nomeProduto === p.nome;
-    });
-    c.quantidade = c.quantidade + 1;
+  if (produtoEmEstoque(p.nome, 1)) {
+    p.estoque = p.estoque - 1;
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+    if (existeProdutoEmCarrinho(p.nome)) {
+      c = carrinho.find((element, index) => {
+        return element.nomeProduto === p.nome;
+      });
+      c.quantidade = c.quantidade + 1;
+    } else {
+      c = {
+        nomeProduto: p.nome,
+        segmentoProduto: p.segmento,
+        precoProduto: p.preco,
+        quantidade: 1,
+        precoProduto: p.preco,
+      };
+      carrinho.push(c);
+    }
   } else {
-    c = {
-      nomeProduto: p.nome,
-      segmentoProduto: p.segmento,
-      precoProduto: p.preco,
-      quantidade: 1,
-      precoProduto: p.preco,
-    };
-    carrinho.push(c);
+    alert("Produto fora de estoque");
   }
-
-  // adicionar produto ao carrinho com o estoque descontado
-
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
@@ -164,6 +160,14 @@ function excluirProdutoCarrinho(indice) {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
   atualizarTabelaCarrinho();
+}
+
+function existeEstoque(nomeProduto) {
+  var p = produtos.find((element, index) => {
+    return element.nome === nomeProduto;
+  });
+
+  console.log(p);
 }
 
 function atualizarEstoque() {}
@@ -221,18 +225,18 @@ function inicializarLocalStorage() {
       { nome: "iPhone 7", segmento: "telefonia", preco: 1400, estoque: 100 },
       { nome: "iPhone 7s", segmento: "telefonia", preco: 1500, estoque: 100 },
       { nome: "iPhone 12", segmento: "telefonia", preco: 3000, estoque: 100 },
-      { nome: "iPhone 2089", segmento: "telefonia", preco: 3800, estoque: 100 },
+      { nome: "iPhone 2089", segmento: "telefonia", preco: 3800, estoque: 2 },
 
       { nome: "camiseta", segmento: "vestuario", preco: 249, estoque: 100 },
       { nome: "bandeira", segmento: "vestuario", preco: 100, estoque: 100 },
-      { nome: "short ", segmento: "vestuario", preco: 59, estoque: 100 },
-      { nome: "tenis ", segmento: "vestuario", preco: 300, estoque: 100 },
-      { nome: "chinelo ", segmento: "vestuario", preco: 39, estoque: 100 },
+      { nome: "short", segmento: "vestuario", preco: 59, estoque: 100 },
+      { nome: "tenis", segmento: "vestuario", preco: 300, estoque: 100 },
+      { nome: "chinelo", segmento: "vestuario", preco: 39, estoque: 100 },
       { nome: "colar", segmento: "vestuario", preco: 99, estoque: 100 },
-      { nome: "calça ", segmento: "vestuario", preco: 199, estoque: 100 },
-      { nome: "boné ", segmento: "vestuario", preco: 79, estoque: 100 },
-      { nome: "cinto ", segmento: "vestuario", preco: 89, estoque: 100 },
-      { nome: "sunga ", segmento: "vestuario", preco: 69, estoque: 100 },
+      { nome: "calça", segmento: "vestuario", preco: 199, estoque: 100 },
+      { nome: "boné", segmento: "vestuario", preco: 79, estoque: 100 },
+      { nome: "cinto", segmento: "vestuario", preco: 89, estoque: 100 },
+      { nome: "sunga", segmento: "vestuario", preco: 69, estoque: 100 },
 
       { nome: "sardinha", segmento: "alimentos", preco: 8.99, estoque: 5 },
       { nome: "arroz", segmento: "alimentos", preco: 18.99, estoque: 5 },
