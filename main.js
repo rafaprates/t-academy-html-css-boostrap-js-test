@@ -53,9 +53,9 @@ function atualizarTabelaSegmentos() {
   document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
 
-function atualizarTabelaProdutos() {
+function atualizarTabelaProdutos(tabelaProdutos = produtos) {
   var dados = "";
-  for (p of produtos) {
+  for (p of tabelaProdutos) {
     dados += `<tr>
                 <td>${p.nome}</td>
                 <td>${p.segmento}</td>
@@ -95,6 +95,19 @@ function atualizarTabelaProdutosAleatorios() {
    </tr>`;
   }
   document.getElementsByTagName("tbody")[0].innerHTML = dados;
+}
+
+function pesquisarProduto() {
+  let termoProcura = document.getElementById("termo-procura").value;
+  produtosComTermo = [];
+  for (p of produtos) {
+    if (p.nome.indexOf(termoProcura) >= 0) {
+      produtosComTermo.push(p);
+      console.log(p.nome);
+    }
+  }
+
+  atualizarTabelaProdutos(produtosComTermo);
 }
 
 function carregarArraysComLocalStorage() {
