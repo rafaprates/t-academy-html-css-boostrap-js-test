@@ -85,16 +85,10 @@ function atualizarTabelaProdutosAleatorios() {
   console.log(indicesAleatorios);
 
   for (i of indicesAleatorios) {
-    dados += `<tr>
-   <td>${produtos[i].nome}</td>
-   <td>${produtos[i].segmento}</td>
-   <td>${produtos[i].estoque}</td>
-   <td>R$ ${produtos[i].preco}</td>
-   <td><button onclick="excluirMarca(
-   )})" class="btn btn-outline-danger btn-sm">Excluir</button></td>
-   </tr>`;
+    produtosAleatorios.push(produtos[i]);
   }
-  document.getElementsByTagName("tbody")[0].innerHTML = dados;
+
+  atualizarTabelaProdutos(produtosAleatorios);
 }
 
 function pesquisarProduto() {
