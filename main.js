@@ -28,9 +28,24 @@ function atualizarTabelaProdutos(tabelaProdutos = produtos) {
   document.getElementsByTagName("tbody")[0].innerHTML = dados;
 }
 
-function gerarProdutosAleatorios() {
-  var dados = "";
+function gerarProdutosFiltrados() {
+  console.log("produtosFiltrados()");
 
+  let segmento = document.getElementById("selecionar-segmento").value;
+  console.log(segmento);
+
+  let = produtosFiltrados = [];
+
+  for (p of produtos) {
+    if (p.segmento == segmento) {
+      produtosFiltrados.push(p);
+    }
+  }
+
+  atualizarTabelaProdutos(produtosFiltrados);
+}
+
+function gerarProdutosAleatorios() {
   let produtosAleatorios = [];
   let indicesAleatorios = [];
   while (indicesAleatorios.length < 12) {
@@ -50,6 +65,7 @@ function gerarProdutosAleatorios() {
 }
 
 function produtoEmEstoque(nomeProduto, retirarQuantidade) {
+  console.log("produtoEmEstoque()");
   for (p of produtos) {
     if (p.nome == nomeProduto) {
       var quantidadeEmEstoque = p.estoque;
@@ -64,6 +80,7 @@ function produtoEmEstoque(nomeProduto, retirarQuantidade) {
 
 function pesquisarProduto() {
   let termoProcura = document.getElementById("termo-procura").value;
+  document.getElementById("selecionar-segmento").value = "todos";
   produtosComTermo = [];
   for (p of produtos) {
     if (p.nome.indexOf(termoProcura) >= 0) {
@@ -75,7 +92,7 @@ function pesquisarProduto() {
   atualizarTabelaProdutos(produtosComTermo);
 }
 
-function addCarrinho(idProduto) {
+function addCarrinho(idProduto, quantidade = 1) {
   console.log("addCarrinho()");
   // encontrar produto no array de Produtos
   let p = produtos[idProduto];
@@ -83,7 +100,7 @@ function addCarrinho(idProduto) {
 
   // descontar a quantidade do estoque
   // atualizar localStorage
-  if (produtoEmEstoque(p.nome, 1)) {
+  if (produtoEmEstoque(p.nome, quantidade)) {
     p.estoque = p.estoque - 1;
     localStorage.setItem("produtos", JSON.stringify(produtos));
     if (existeProdutoEmCarrinho(p.nome)) {
@@ -105,6 +122,7 @@ function addCarrinho(idProduto) {
     alert("Produto fora de estoque");
   }
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  atualizarTabelaCarrinho();
 }
 
 function atualizarTabelaCarrinho() {
@@ -119,11 +137,13 @@ function atualizarTabelaCarrinho() {
                 <td>                
                     <input
                         class="form-control"
-                        style="width: 50px; height: 30px"
+                        style="width: 80px; height: 30px"
                         type="number"
-                        id="qtd-carrinho"
+                        id="qtd-carrinho-produto-${carrinho.indexOf(c)}"
                         value=${c.quantidade}
-                        onchange="console.log('mudou')"
+                        onchange="atualizarProdutoCarrinho(${carrinho.indexOf(
+                          c
+                        )})"
                     />
                 </td>
 
@@ -159,15 +179,15 @@ function excluirProdutoCarrinho(indice) {
   atualizarTabelaCarrinho();
 }
 
-function existeEstoque(nomeProduto) {
-  var p = produtos.find((element, index) => {
-    return element.nome === nomeProduto;
-  });
+function atualizarProdutoCarrinho(idProduto) {
+  let quantidadeAtualizada = document.getElementById(
+    `qtd-carrinho-produto-${idProduto}`
+  ).value;
 
-  console.log(p);
+  console.log(quantidadeAtualizada);
+
+  addCarrinho(idProduto, quantidadeAtualizada);
 }
-
-function atualizarEstoque() {}
 
 function totalCarrinho() {
   var total = 0;

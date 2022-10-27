@@ -45,6 +45,23 @@
       <div class="card">
         <div class="card-header">Listagem</div>
         <div class="card-body">
+          <div class="form-group">
+            <div class="form-label">
+              Filtrar por segmento
+              <select
+                onchange="gerarProdutosFiltrados()"
+                class="form-control"
+                name=""
+                id="selecionar-segmento"
+              >
+                <option value="todos">Todos</option>
+                <option value="telefonia">Telefonia</option>
+                <option value="vestuario">Vestuário</option>
+                <option value="alimentos">Alimentício</option>
+              </select>
+            </div>
+          </div>
+
           <table class="table" id="tabela-marcas">
             <thead>
               <th>Nome</th>
