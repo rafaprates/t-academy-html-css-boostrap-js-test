@@ -9,9 +9,10 @@
       rel="stylesheet"
     />
     <title>Gerenciar produtos</title>
+    <script src="main.js"></script>
   </head>
 
-  <body onload="addOpcoesDeMarcas(); adicionarProdutoATabela()">
+  <body onload="atualizarTabelaProdutos()">
     <div class="container mt-2">
       <nav class="nav nav-tabs nav-fill mb-3 mt-3">
         <a class="nav-link" href="index.html">Início</a>
@@ -21,39 +22,52 @@
         <a class="nav-link" href="carrinho.html">Carrinho</a>
       </nav>
 
+      <!-- 
       <div class="card mb-3">
         <div class="card-header">Cadastrar</div>
         <div class="card-body">
           <div class="form-group row">
-            <label for="nomeProduto">
+            <label for="input-produto-nome">
               Nome
               <input
                 type="text"
-                name="nomeProduto"
-                id="nomeProduto"
+                name="input-produto-nome"
+                id="input-produto-nome"
                 class="form-control"
               />
             </label>
           </div>
 
           <div class="form-group row">
-            <label for="marcaProduto">
-              Marca
+            <label for="input-segmento-nome">
+              Segmento
               <select
-                name="marcaProduto"
-                id="marcaProduto"
+                name="input-segmento-nome"
+                id="input-segmento-nome"
                 class="form-control"
               ></select>
             </label>
           </div>
 
           <div class="form-group row mb-2">
-            <label for="precoProduto">
+            <label for="input-estoque-produto">
+              Estoque
+              <input
+                type="number"
+                name="input-estoque-produto"
+                id="input-estoque-produto"
+                class="form-control"
+              />
+            </label>
+          </div>
+
+          <div class="form-group row mb-2">
+            <label for="input-preco-produto">
               Preço
               <input
                 type="number"
-                name="precoProduto"
-                id="precoProduto"
+                name="input-preco-produto"
+                id="input-preco-produto"
                 class="form-control"
               />
             </label>
@@ -66,14 +80,16 @@
           </div>
         </div>
       </div>
+    -->
 
       <div class="card">
         <div class="card-header">Listagem</div>
         <div class="card-body">
-          <table class="table" id="tabelaMarcas">
+          <table class="table" id="tabela-marcas">
             <thead>
               <th>Nome</th>
               <th>Marca</th>
+              <th>Estoque</th>
               <th>Preço</th>
               <th></th>
             </thead>
@@ -82,6 +98,5 @@
         </div>
       </div>
     </div>
-    <script src="main.js"></script>
   </body>
 </html>
